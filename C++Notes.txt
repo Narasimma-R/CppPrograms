@@ -498,3 +498,41 @@ Methods
 2. erase(key)
 3. clear() -> remove all
 4. size(), empty()
+
+
+unique_ptr():
+    - Its an smarrt pointer that manages a dynamically allocated object
+    - It is defined in the <memory> header file.
+
+Here are the key points about unique_ptr:
+    - Ownership: unique_ptr owns the object it points to. Only one unique_ptr can own an object at a time.
+    - Move Semantics: Since only one unique_ptr can own an object, it cannot be copied. However, it can be transferred (moved) from one unique_ptr to another using move semantics (std::move).
+    - Memory Management: unique_ptr automatically deletes the object it points to when it goes out of scope, so there's no need to manually call delete.
+
+When we write unique_ptr<A> ptr1 (new A), memory is allocated on the heap for an instance of datatype A. ptr1 is initialized and points to newly created A object. Here, ptr1 is the only owner of the newly created object A and it manages this object's lifetime. This means that when ptr1 is reset or goes out of scope, memory is automatically deallocated, and A's object is destroyed.
+also create a unique pointer using make_unique() function.
+
+Example:
+#include <iostream>
+#include <memory>
+using namespace std;
+
+struct A {
+    void printA() {
+        cout << "A struct...." << endl;
+    }
+};
+
+int main() {
+    
+    unique_ptr<A> p1(new A);
+    p1->printA();
+
+    // displays address of the 
+    // containing pointer
+    cout << p1.get();
+    return 0;
+}
+
+When to use unique_ptr?
+When ownership of resource is required. When we want single or exclusive ownership of a resource, then we should go for unique pointers. Only one unique pointer can point to one resource. So, one unique pointer cannot be copied to another. Also, it facilitates automatic cleanup when dynamically allocated objects go out of scope and helps preventing memory leaks.
